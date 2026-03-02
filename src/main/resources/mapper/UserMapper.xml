@@ -6,13 +6,17 @@
 <mapper namespace="com.techpulse.learn.mapper.UserMapper">
 
     <select id="findById" parameterType="long" resultType="com.techpulse.learn.entity.User">
-        SELECT id, name, email
+        SELECT
+            id,
+            name,
+            email,
+            is_deleted AS isDeleted
         FROM users
         WHERE id = #{id}
     </select>
 
     <select id="findAll" resultType="com.techpulse.learn.entity.User">
-        SELECT id, name, email
+        SELECT id, name, email, is_deleted AS isDeleted
         FROM users
     </select>
 
@@ -30,5 +34,21 @@
         FROM users
         WHERE LOWER(name) LIKE CONCAT('%', LOWER(#{name}), '%')
     </select>
+
+    <!-- Soft Delete -->
+    <update id="softDeleteUser" parameterType="long">
+        UPDATE users
+        SET is_deleted = 1
+        WHERE id = #{id}
+        AND is_deleted = 0
+    </update>
+
+    <!-- Find Only Active Users -->
+    <select id="findAllActiveUsers" resultType="com.techpulse.learn.entity.User">
+        SELECT id, name, email, is_deleted
+        FROM users
+        WHERE is_deleted = 0
+    </select>
+
 
 </mapper>
