@@ -34,4 +34,7 @@ public class UserService {
         return userMapper.deleteUser(id) > 0;
     }
 
+    public List<User> searchUsersByName(String name) {
+        return userMapper.searchUsersByName(name);
+    }
 }

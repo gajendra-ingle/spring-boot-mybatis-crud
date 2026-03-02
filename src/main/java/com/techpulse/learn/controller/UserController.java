@@ -1,5 +1,6 @@
 package com.techpulse.learn.controller;
 
+import com.techpulse.learn.dto.ApiResponse;
 import com.techpulse.learn.entity.User;
 import com.techpulse.learn.service.UserService;
 import lombok.AllArgsConstructor;
@@ -42,4 +43,16 @@ public class UserController {
         }
         return ResponseEntity.ok("User with id " + id + " deleted successfully.");
     }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<ApiResponse<List<User>>> searchUsersByName(@PathVariable String name) {
+        List<User> users = userService.searchUsersByName(name);
+        boolean success = !users.isEmpty();
+        String message = success
+                ? "Users found successfully"
+                : "No users found with name containing: " + name;
+
+        return ResponseEntity.ok(new ApiResponse<>(success, message, users));
+    }
+
 }

@@ -25,4 +25,10 @@
         DELETE FROM users WHERE id = #{id}
     </delete>
 
+    <select id="searchUsersByName" resultType="com.techpulse.learn.entity.User">
+        SELECT *
+        FROM users
+        WHERE LOWER(name) LIKE CONCAT('%', LOWER(#{name}), '%')
+    </select>
+
 </mapper>
