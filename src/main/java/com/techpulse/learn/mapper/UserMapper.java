@@ -18,4 +18,11 @@ public interface UserMapper {
     int deleteUser(Long id);
 
     List<User> searchUsersByName(@Param("name") String name);
+
+    int softDeleteUser(Long id);
+
+    List<User> findAllActiveUsers();
+
+    // User findByIdIncludingDeleted(Long id);
+
 }
