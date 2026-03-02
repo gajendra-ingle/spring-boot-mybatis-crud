@@ -4,6 +4,7 @@ import com.techpulse.learn.dto.ApiResponse;
 import com.techpulse.learn.entity.User;
 import com.techpulse.learn.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,9 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         boolean isDeleted = userService.deleteUser(id);
         if (!isDeleted) {
-            return ResponseEntity.status(404).body("User with id " + id + " not found.");
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("User with id " + id + " not found.");
         }
         return ResponseEntity.ok("User with id " + id + " deleted successfully.");
     }
@@ -48,11 +51,27 @@ public class UserController {
     public ResponseEntity<ApiResponse<List<User>>> searchUsersByName(@PathVariable String name) {
         List<User> users = userService.searchUsersByName(name);
         boolean success = !users.isEmpty();
-        String message = success
-                ? "Users found successfully"
-                : "No users found with name containing: " + name;
+        String message = success ?
+                "Users found successfully" :
+                "No users found with name containing: " + name;
 
         return ResponseEntity.ok(new ApiResponse<>(success, message, users));
+    }
+
+    @DeleteMapping("/soft/{id}")
+    public ResponseEntity<ApiResponse<Void>> softDelete(@PathVariable Long id) {
+        ApiResponse<Void> response = userService.softDeleteUser(id);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<ApiResponse<List<User>>> getActiveUsers() {
+        List<User> users = userService.getAllActiveUsers();
+        return ResponseEntity.ok(new ApiResponse<>(true, "Active users retrieved successfully", users));
     }
 
 }
