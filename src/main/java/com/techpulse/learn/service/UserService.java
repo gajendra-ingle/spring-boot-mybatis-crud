@@ -62,4 +62,8 @@ public class UserService {
         }
         return users;
     }
+
+    public long countUsers() {
+        return userMapper.countUsers();
+    }
 }
