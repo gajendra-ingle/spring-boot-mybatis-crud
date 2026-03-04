@@ -23,6 +23,8 @@ public interface UserMapper {
 
     List<User> findAllActiveUsers();
 
+    long countUsers();
+
     // User findByIdIncludingDeleted(Long id);
 
 }
