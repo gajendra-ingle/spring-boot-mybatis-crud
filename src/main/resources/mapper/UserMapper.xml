@@ -7,10 +7,10 @@
 
     <select id="findById" parameterType="long" resultType="com.techpulse.learn.entity.User">
         SELECT
-            id,
-            name,
-            email,
-            is_deleted AS isDeleted
+        id,
+        name,
+        email,
+        is_deleted AS isDeleted
         FROM users
         WHERE id = #{id}
     </select>
@@ -38,7 +38,7 @@
     <!-- Soft Delete -->
     <update id="softDeleteUser" parameterType="long">
         UPDATE users
-        SET is_deleted = 1
+        SET is_deleted = sa
         WHERE id = #{id}
         AND is_deleted = 0
     </update>
@@ -46,6 +46,12 @@
     <!-- Find Only Active Users -->
     <select id="findAllActiveUsers" resultType="com.techpulse.learn.entity.User">
         SELECT id, name, email, is_deleted
+        FROM users
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="countUsers" resultType="long">
+        SELECT COUNT(*)
         FROM users
         WHERE is_deleted = 0
     </select>
