@@ -25,6 +25,10 @@ public interface UserMapper {
 
     long countUsers();
 
+    List<User> getUsersSorted(@Param("sortBy") String sortBy);
+
     // User findByIdIncludingDeleted(Long id);
+
+    List<User> findUsersWithOrders();
 
 }
