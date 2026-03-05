@@ -56,5 +56,23 @@
         WHERE is_deleted = 0
     </select>
 
+    <select id="getUsersSorted" resultType="com.techpulse.learn.entity.User">
+        SELECT *
+        FROM users
+        WHERE is_deleted = 0
+
+        <choose>
+            <when test="sortBy == 'name'">
+                ORDER BY name
+            </when>
+            <when test="sortBy == 'email'">
+                ORDER BY email
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+    </select>
+
 
 </mapper>
