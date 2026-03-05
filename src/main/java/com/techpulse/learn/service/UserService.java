@@ -66,4 +66,9 @@ public class UserService {
     public long countUsers() {
         return userMapper.countUsers();
     }
+
+    public List<User> getUsersSorted(String sortBy) {
+        return userMapper.getUsersSorted(sortBy);
+    }
+
 }
