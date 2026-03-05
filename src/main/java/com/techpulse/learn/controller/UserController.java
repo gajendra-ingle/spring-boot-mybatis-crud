@@ -83,4 +83,9 @@ public class UserController {
         );
     }
 
+    @GetMapping("/sorted")
+    public List<User> getUsersSorted(@RequestParam(required = false) String sortBy) {
+        return userService.getUsersSorted(sortBy);
+    }
+
 }
