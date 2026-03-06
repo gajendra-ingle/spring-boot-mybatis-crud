@@ -27,16 +27,12 @@ public class OrderService {
     }
 
     public Order updateOrder(Long id, Order order) {
-
         Order existingOrder = orderMapper.getOrderById(id);
-
         if (existingOrder == null) {
             return null;
         }
-
         order.setId(id);
         orderMapper.updateOrder(order);
-
         return orderMapper.getOrderById(id);
     }
 
