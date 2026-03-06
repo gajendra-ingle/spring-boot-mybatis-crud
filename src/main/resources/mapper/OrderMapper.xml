@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.techpulse.learn.mapper.OrderMapper">
+
+    <!-- Get order by ID -->
+    <select id="getOrderById" resultType="com.techpulse.learn.entity.Order">
+        SELECT id, user_id AS userId, product_name AS productName, price, quantity
+        FROM orders
+        WHERE id = #{id}
+    </select>
+
+    <!-- Get all orders -->
+    <select id="getAllOrders" resultType="com.techpulse.learn.entity.Order">
+        SELECT id, user_id AS userId, product_name AS productName, price, quantity
+        FROM orders
+    </select>
+
+    <!-- Insert order -->
+    <insert id="insertOrder" parameterType="com.techpulse.learn.entity.Order">
+        INSERT INTO orders (user_id, product_name, price, quantity)
+        VALUES (#{userId}, #{productName}, #{price}, #{quantity})
+    </insert>
+
+    <!-- Update order -->
+    <update id="updateOrder" parameterType="com.techpulse.learn.entity.Order">
+        UPDATE orders
+        SET user_id = #{userId},
+        product_name = #{productName},
+        price = #{price},
+        quantity = #{quantity}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Delete order -->
+    <delete id="deleteOrder">
+        DELETE FROM orders
+        WHERE id = #{id}
+    </delete>
+
+    <!-- Get orders by user -->
+    <select id="getOrdersByUserId" resultType="com.techpulse.learn.entity.Order">
+        SELECT id, user_id AS userId, product_name AS productName, price, quantity
+        FROM orders
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- Count orders -->
+    <select id="countOrders" resultType="long">
+        SELECT COUNT(*)
+        FROM orders
+    </select>
+
+</mapper>
